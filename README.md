@@ -357,6 +357,38 @@ npm run docker-down:api-mysql:production       # Derruba os containers com MySQL
 >
 > Antes de subir, certifique-se de ter o arquivo `.env.production` configurado (veja a seção [Variáveis de ambiente](#variáveis-de-ambiente)).
 
+#### Executando migrations em produção via container
+
+Em produção, as migrations devem ser executadas manualmente dentro do container da API. Os composes de produção **não rodam migrations automaticamente**.
+
+**PostgreSQL** (container: `nba_h2h_api_postgresql_production`)
+
+```bash
+# 1. Acesse o shell do container
+docker exec -it nba_h2h_api_postgresql_production sh
+
+# 2. Crie a migration (somente gera o arquivo SQL, sem aplicar)
+npx prisma migrate dev --name init --create-only --schema prisma/schema.postgresql.prisma
+
+# 3. Aplique as migrations no banco
+npx prisma migrate deploy --schema prisma/schema.postgresql.prisma
+```
+
+**MySQL** (container: `nba_h2h_api_mysql_production`)
+
+```bash
+# 1. Acesse o shell do container
+docker exec -it nba_h2h_api_mysql_production sh
+
+# 2. Crie a migration (somente gera o arquivo SQL, sem aplicar)
+npx prisma migrate dev --name init --create-only --schema prisma/schema.mysql.prisma
+
+# 3. Aplique as migrations no banco
+npx prisma migrate deploy --schema prisma/schema.mysql.prisma
+```
+
+> **Nota:** O passo 2 (`migrate dev --create-only`) é necessário apenas quando há novas migrations a gerar. Para aplicar migrations já existentes em um banco limpo, use apenas o passo 3 (`migrate deploy`).
+
 ### Docker (build customizado — `deploy/Dockerfile`)
 
 O diretório `deploy/` contém o `Dockerfile` de produção para quem quiser publicar a própria imagem no Docker Hub e implantá-la em qualquer servidor.
