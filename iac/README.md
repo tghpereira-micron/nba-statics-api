@@ -64,7 +64,7 @@ pulumi config set --secret nba-statics-api:RAILWAY_TOKEN "06d50b4e-c504-4f26-bae
   && pulumi config set nba-statics-api:RAILWAY_PROJECT_NAME "NBA Statics Project" \
   && pulumi config set nba-statics-api:RAILWAY_DROPLET_NAME "NBA Statics Api" \
   && pulumi config set nba-statics-api:RAILWAY_ENVIRONMENT_NAME "production" \
-  && pulumi config set nba-statics-api:RAILWAY_DOCKER_IMAGE_NAME "tghbr/nba-statics-api-postgresql"
+  && pulumi config set nba-statics-api:RAILWAY_DOCKER_IMAGE_NAME "pedroadiniz/nba-statics-api-postgresql:latest"
 
 pulumi config set --secret nba-statics-api:RAILWAY_VARIABLE \
   '{"DATABASE_ENGINE":"postgresql","DATABASE_URL":"postgresql://nba_user:<senha>@<host>/nba_h2h","API_KEY":"<chave>","CORS_ORIGINS":"https://seu-dominio.com","PORT":"3000","NODE_ENV":"production","RATE_LIMIT_WINDOW_MS":"60000","RATE_LIMIT_MAX_REQUESTS":"30","NBA_STATS_BASE_URL":"https://stats.nba.com/stats","NBA_REQUEST_DELAY_MS":"700"}'

@@ -11,6 +11,7 @@ COPY . .
 
 ARG DATABASE_ENGINE=mysql
 RUN npx prisma generate --schema prisma/schema.${DATABASE_ENGINE}.prisma
+RUN npm run build
 
 RUN chmod +x entrypoint.sh
 

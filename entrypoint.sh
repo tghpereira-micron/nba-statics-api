@@ -7,4 +7,8 @@ else
   npm run db:setup:production:${DATABASE_ENGINE}
 fi
 
-exec npm run dev
+if [ "$NODE_ENV" = "development" ]; then
+  exec npm run dev
+else
+  exec npm run start
+fi
